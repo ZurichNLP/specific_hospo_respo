@@ -58,39 +58,34 @@ scripts/data_prep/score_lm_ppl.ipynb # document-level
 
 Once scored, filtering can be done using the script `scripts/data_prep/filter_data.ipynb`. This allows for inspecting and filtering data according to score thresholds.
 
-## Model Training and Inference
+## Model Training, Inference and Evaluating Model Outputs
 
 We fine-tuned our models with pytorch lightning. 
-The scipts for model training and inference are in `scripts/modelling`.
+The scipts for model training and inference are in `scripts/modelling/`.
+
 Note: these are adapted from skeleton code used in LongMBART (A. Rios, UZH).
 
 `scripts/modelling/train.py`
-    - accepts path to pretrained model dir (from 🤗 Transformers)
-    - training, validation, test data
-    - runs fine-tuning
+  - accepts path to pretrained model dir (from 🤗 Transformers)
+  - training, validation, test data
+  - runs fine-tuning
 
 `scripts/modelling/inference.py`
-    - decodes test set
+  - decodes test set
 
+Scripts for evaluating model outputs are in `scripts/evaluation/`. In the paper, we report a collection of automatic metrics to measure the impact of our data filtering on model outputs.
+These metrics are computed with the script `evaluate_line_aligned.py`. For example,
 
-## Evaluating Model Outputs
-
-We report a collection of automatic metrics to measure the impact of our data filtering on model outputs.
-
-These are computed with the script `scripts/evaluation/evaluate_line_aligned.py`. For example,
-
-```
-python evaluate_line_aligned.py \
-  models/filt_tgt_ppl_s985/inference/ckpt07/bs5.txt \ # model outputs
-  --src_file data/hotel/500k/test.review \ # review texts
-  -ref_file data/hotel/500k/test.response \ # response texts
-```
-
-## Experiments
+`scripts/evaluation/evaluate_line_aligned.py`
+  - accepts line-aligned model outputs, source text and reference text files 
+  
+### Experimental Pipelines
 
 All commands used to perform our experiments are provided in the bash scripts located in `scripts/`.
 
-### Finetuning
+For more details on the commands used (e.g. in case of reproduction), see also `scripts/experiment_commands.md`.
+
+#### Finetuning
 
 To finetune a model with default settings, use `run_finetuning.sh`, e.g.
 
@@ -103,7 +98,7 @@ bash run_finetuning.sh \
   data/hotel/filt_freq_distro_0.0_0.883 # data_dir containing source target line-aligned files
 ```
 
-### Inference
+#### Inference
 
 To run inference with a fine-tuned model, use one of the functions in `run_inference.sh`, specifying the GPU device ID, e.g.
 
@@ -111,7 +106,7 @@ To run inference with a fine-tuned model, use one of the functions in `run_infer
 bash run_inference.sh inference_filt_freq_distro 4
 ```
 
-### Automatic Evaluation
+#### Automatic Evaluation
 
 To evaluate the model generations, use one of the functions in `run_eval.sh`, e.g.
 
