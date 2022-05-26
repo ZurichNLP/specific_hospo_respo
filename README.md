@@ -116,5 +116,19 @@ bash run_eval.sh eval_hospo_respo_filtering
 
 ## Citation
 
-If you find any of these scripts useful for your own research, please cite "Improving Specificity in Review Response Generation with Data-Driven Data Filtering".
+If you find any of these scripts useful for your own research, please cite [Improving Specificity in Review Response Generation with Data-Driven Data Filtering](https://aclanthology.org/2022.ecnlp-1.15) (Kew & Volk, ECNLP 2022).
 
+```
+@inproceedings{kew-volk-2022-improving,
+    title = "Improving Specificity in Review Response Generation with Data-Driven Data Filtering",
+    author = "Kew, Tannon  and
+      Volk, Martin",
+    booktitle = "Proceedings of The Fifth Workshop on e-Commerce and NLP (ECNLP 5)",
+    month = may,
+    year = "2022",
+    address = "Dublin, Ireland",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.ecnlp-1.15",
+    pages = "121--133",
+}
+```
