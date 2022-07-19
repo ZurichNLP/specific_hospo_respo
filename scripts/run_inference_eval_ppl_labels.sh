@@ -35,7 +35,7 @@ do
         
     echo "evaluating $outfile ..."
     python $eval_scripts/evaluate_line_aligned.py \
-        $outfile \
+        --hyp_files $outfile \
         --src_file $data_dir/test.review \
         --ref_file $data_dir/test.response \
         --compute_sts | tee "$out_dir/ppl${n}_bs5_eval_result.txt"

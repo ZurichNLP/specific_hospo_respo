@@ -23,7 +23,7 @@ eval_app_data() {
         translations="$inference_dir/$model_dir/inference/bs5.txt"
         echo "evaluating $translations ..."
         python $eval_scripts/evaluate_line_aligned.py \
-            $translations \
+            --hyp_files $translations \
             --src_file $raw_data/test.review \
             --ref_file $raw_data/test.response \
             --compute_sts | tee "$inference_dir/$model_dir/inference/eval_result.txt"
@@ -42,7 +42,7 @@ eval_hospo_ablation() {
         translations="$inference_dir/$model_dir/inference/bs5.txt"
         echo "evaluating $translations ..."
         python $eval_scripts/evaluate_line_aligned.py \
-            $translations \
+            --hyp_files $translations \
             --src_file $raw_data/test.review \
             --ref_file $raw_data/test.response \
             --compute_sts | tee "$inference_dir/$model_dir/inference/eval_result.txt"
@@ -57,7 +57,7 @@ eval_hospo_seed_runs() {
         translations="$inference_dir/$model_dir/inference/bs5.txt"
         echo "evaluating $translations ..."
         python $eval_scripts/evaluate_line_aligned.py \
-            $translations \
+            --hyp_files $translations \
             --src_file $raw_data/test.review \
             --ref_file $raw_data/test.response \
             --compute_sts | tee "$inference_dir/$model_dir/inference/eval_result.txt"
@@ -72,7 +72,7 @@ eval_hospo_respo_filtering() {
         translations="$inference_dir/$model_dir/inference/bs5.txt"
         echo "evaluating $translations ..."
         python $eval_scripts/evaluate_line_aligned.py \
-            $translations \
+            --hyp_files $translations \
             --src_file $raw_data/test.review \
             --ref_file $raw_data/test.response \
             --compute_sts | tee "$inference_dir/$model_dir/inference/eval_result.txt"
@@ -85,7 +85,7 @@ eval_rulebased_baseline() {
     # rule based lookup
     echo "evaluating $inference_dir/rule_based/translations.txt ..."
     python $eval_scripts/evaluate_line_aligned.py \
-        $inference_dir/rule_based/translations.txt \
+        --hyp_files $inference_dir/rule_based/translations.txt \
         --src_file $raw_data/test.review \
         --ref_file $raw_data/test.response \
         --compute_sts | tee "$inference_dir/rule_based/eval_result.txt"
@@ -97,7 +97,7 @@ eval_human_refs() {
     # human references
     echo "$raw_data/test.response"
     python $eval_scripts/evaluate_line_aligned.py \
-        $raw_data/test.response \
+        --hyp_files $raw_data/test.response \
         --src_file $raw_data/test.review \
         --ref_file $raw_data/test.response \
         --compute_sts | tee "$inference_dir/human_ref.eval_result.txt"
@@ -115,7 +115,7 @@ eval_labelled_generation() {
         translations="$inference_dir/label_tgt_ppl/inference/ppl${id}_bs5.txt"
         echo "evaluating $translations ..."
         python $eval_scripts/evaluate_line_aligned.py \
-            $translations \
+            --hyp_files $translations \
             --src_file $raw_data/test.review \
             --ref_file $raw_data/test.response \
             --compute_sts | tee "$inference_dir/label_tgt_ppl/inference/ppl${id}_eval_result.txt"
