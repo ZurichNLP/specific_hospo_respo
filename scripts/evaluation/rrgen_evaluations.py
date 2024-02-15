@@ -35,11 +35,11 @@ selfbleu = SelfBLEUScorer(corpus_level=True, sent_level=True, n_workers=4, verbo
 # insert path for customised SARI metric
 sys.path.insert(1, '/home/user/kew/INSTALLS/datasets/metrics/sari/')
 
-from sari_bp import SariBP
-from sari import Sari
+# from sari_bp import SariBP
+# from sari import Sari
 
-sari_bp = SariBP()
-sari = Sari()
+# sari_bp = SariBP()
+# sari = Sari()
 
 def calculate_hyp_lens(hyps: List[str]) -> float:
     """

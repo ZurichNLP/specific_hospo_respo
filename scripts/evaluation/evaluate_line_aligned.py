@@ -1,6 +1,16 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+"""
+Example call:
+
+    # compute all metrics on a single file
+    python scripts/evaluation/evaluate_line_aligned.py \
+        --hyp_files data/apps/src-tgt/test.tgt \
+        --src_file data/apps/src-tgt/test.src \
+        --ref_file data/apps/src-tgt/test.tgt > models/apps/human_ref.eval_result.txt
+"""
+
 import argparse
 from typing import List, Dict, Optional, Tuple
 import pandas as pd
