@@ -6,7 +6,7 @@ eval_scripts="$base/evaluation"
 
 # hotel data
 raw_data="../data/hotel/500k/"
-inference_dir="../models/"
+inference_dir="../models/hotels/"
 
 ####################################################
 # ablation studies: Does it generalise to app rrgen?
@@ -40,27 +40,27 @@ eval_hospo_ablation() {
     for model_dir in filt_tgt_ppl_abl_20 filt_tgt_ppl_abl_60 filt_tgt_ppl_abl_80 filt_combo
     do
         translations="$inference_dir/$model_dir/inference/bs5.txt"
+        outfile="$inference_dir/$model_dir/eval_result.txt"
         echo "evaluating $translations ..."
         python $eval_scripts/evaluate_line_aligned.py \
             --hyp_files $translations \
             --src_file $raw_data/test.review \
-            --ref_file $raw_data/test.response \
-            --compute_sts | tee "$inference_dir/$model_dir/inference/eval_result.txt"
+            --ref_file $raw_data/test.response | tee "$outfile"
     done
 
 }
 
 eval_hospo_seed_runs() {
 
-    for model_dir in baseline_s42 baseline_s985 filt_gen_sent_s42 filt_gen_sent_s985 filt_freq_distro_s42 filt_freq_distro_s985
+    for model_dir in baseline baseline_s42 baseline_s985 filt_tgt_ppl filt_tgt_ppl_s42 filt_tgt_ppl_s985 filt_gen_sent filt_gen_sent_s42 filt_gen_sent_s985 filt_freq_distro filt_freq_distro_s42 filt_freq_distro_s985
     do
         translations="$inference_dir/$model_dir/inference/bs5.txt"
+        outfile="$inference_dir/$model_dir/eval_result.txt"
         echo "evaluating $translations ..."
         python $eval_scripts/evaluate_line_aligned.py \
             --hyp_files $translations \
             --src_file $raw_data/test.review \
-            --ref_file $raw_data/test.response \
-            --compute_sts | tee "$inference_dir/$model_dir/inference/eval_result.txt"
+            --ref_file $raw_data/test.response | tee "$outfile"
     done
 
 }
@@ -74,8 +74,7 @@ eval_hospo_respo_filtering() {
         python $eval_scripts/evaluate_line_aligned.py \
             --hyp_files $translations \
             --src_file $raw_data/test.review \
-            --ref_file $raw_data/test.response \
-            --compute_sts | tee "$inference_dir/$model_dir/inference/eval_result.txt"
+            --ref_file $raw_data/test.response | tee "$inference_dir/$model_dir/inference/eval_result.txt"
     done
 
 }
@@ -83,24 +82,24 @@ eval_hospo_respo_filtering() {
 eval_rulebased_baseline() {
 
     # rule based lookup
-    echo "evaluating $inference_dir/rule_based/translations.txt ..."
+    infile="$inference_dir/rule_based/translations.txt"
+    outfile="$inference_dir/rule_based/eval_result.txt"
+    echo "evaluating $infile ..."
     python $eval_scripts/evaluate_line_aligned.py \
-        --hyp_files $inference_dir/rule_based/translations.txt \
+        --hyp_files "$infile" \
         --src_file $raw_data/test.review \
-        --ref_file $raw_data/test.response \
-        --compute_sts | tee "$inference_dir/rule_based/eval_result.txt"
+        --ref_file $raw_data/test.response | tee "$outfile"
 
 }
 
 eval_human_refs() {
 
     # human references
-    echo "$raw_data/test.response"
+    echo "evaluating $raw_data/test.response ..."
     python $eval_scripts/evaluate_line_aligned.py \
         --hyp_files $raw_data/test.response \
         --src_file $raw_data/test.review \
-        --ref_file $raw_data/test.response \
-        --compute_sts | tee "$inference_dir/human_ref.eval_result.txt"
+        --ref_file $raw_data/test.response | tee "$inference_dir/ground_truth/eval_result.txt"
 
 }
 
